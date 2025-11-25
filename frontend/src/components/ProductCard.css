@@ -1,0 +1,79 @@
+/* frontend/src/components/ProductCard.css */
+.product-card {
+  background: white;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s; /* Animación suave */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Efecto al pasar el mouse por encima */
+.product-card:hover {
+  transform: translateY(-5px); /* Sube un poquito */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra elegante */
+}
+
+.image-container {
+  height: 180px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Ajusta la imagen sin estirarla */
+}
+
+.card-details {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #666;
+  flex-grow: 1;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between; /* Precio a la izq, botón a la der */
+  align-items: center;
+  margin-top: 15px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.add-btn {
+  background-color: #00d2d3; /* Color estilo Vaper (Cyan) */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background-color: #01a3a4;
+}

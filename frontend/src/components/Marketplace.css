@@ -1,0 +1,65 @@
+
+.marketplace-container {
+  padding: 0;
+  background-color: #f3f3f3;
+  min-height: 100vh;
+  width: 100%; 
+}
+
+/* --- HEADER --- */
+.marketplace-header {
+  background-color: #1a1a1a; 
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand h1 {
+  color: #fff; /* Título blanco */
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.brand p {
+  color: #00d2d3;
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* BOTÓN ADMIN */
+.admin-link {
+  text-decoration: none;
+  color: #ccc;
+  border: 1px solid #555;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+  background-color: #333;
+  color: white;
+  border-color: #fff;
+}
+
+/* REJILLA DE PRODUCTOS */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem 2rem;
+}

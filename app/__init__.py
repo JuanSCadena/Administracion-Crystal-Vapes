@@ -1,7 +1,10 @@
+# app/__init__.py
 from flask import Flask
 from app.extensions import db
-# NO importar api_bp si no existe
 from app.web_views import web_bp
+
+# 1. IMPORTAR EL BLUEPRINT DE PRODUCTOS (El cable nuevo)
+from app.controllers.product_controller import product_bp 
 
 def create_app():
     app = Flask(__name__)
@@ -12,12 +15,19 @@ def create_app():
     
     db.init_app(app)
     
-    # SOLO registrar web_bp
+    # Registramos las vistas web normales
     app.register_blueprint(web_bp)
-    # NO registrar api_bp
+    
+    # 2. REGISTRAR EL BLUEPRINT DE LA API (Conectar el cable)
+    # Esto le dice a Flask: "Oye, si alguien pide /api/products, usa este archivo"
+    app.register_blueprint(product_bp)
     
     with app.app_context():
-        from app.models import User, Product, Supplier
+        # Importamos los modelos para asegurar que SQLAlchemy los conozca
+        from app.models.user import User
+        from app.models.product import Product
+        from app.models.supplier import Supplier
+        
         db.create_all()
         print("✅ Base de datos inicializada correctamente")
     

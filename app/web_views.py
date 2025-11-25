@@ -1,3 +1,4 @@
+# app/web_views.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from functools import wraps
 
@@ -116,8 +117,7 @@ def list_users():
 @web_bp.route('/users/edit/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def edit_user(user_id):
-    # Verificar permisos: solo admin puede editar cualquier usuario
-    # o el usuario puede editar su propio perfil
+    # Verificar permisos
     if session.get('user_role') != 'admin' and user_id != session['user_id']:
         flash('No tienes permiso para editar este usuario.', 'error')
         return redirect(url_for('web.dashboard'))
@@ -142,7 +142,6 @@ def edit_user(user_id):
         result = AuthController.update_user(user_id, **update_data)
         if result['success']:
             flash('Usuario actualizado exitosamente.', 'success')
-            # Actualizar sesión si se edita el propio usuario
             if user_id == session['user_id']:
                 session['username'] = username
                 session['user_role'] = role
@@ -156,7 +155,6 @@ def edit_user(user_id):
 @login_required
 @role_required(['admin'])
 def delete_user(user_id):
-    # Impedir que un admin se auto-elimine
     if user_id == session['user_id']:
         flash('No puedes eliminar tu propia cuenta de admin.', 'error')
         return redirect(url_for('web.list_users'))
@@ -175,7 +173,6 @@ def delete_user(user_id):
 @login_required
 @role_required(['admin', 'subadmin'])
 def admin_dashboard():
-    # Información general del sistema
     total_products = Product.query.count()
     total_suppliers = Supplier.query.count()
     total_users = User.query.count()
@@ -208,10 +205,16 @@ def admin_products_create():
         description = request.form.get('description')
         price = float(request.form.get('price', 0))
         stock = int(request.form.get('stock', 0))
+        
+        # --- AQUÍ CAPTURAMOS LA IMAGEN ---
+        image_url = request.form.get('image_url')
+        
         supplier_id = request.form.get('supplier_id')
         supplier_id = int(supplier_id) if supplier_id else None
 
-        result = ProductController.create_product(name, description, price, stock, supplier_id)
+        # Pasamos image_url al controlador (asegúrate que el orden coincide con tu controller)
+        result = ProductController.create_product(name, description, price, stock, image_url, supplier_id)
+        
         if result['success']:
             flash(result['message'], 'success')
             return redirect(url_for('web.admin_products_list'))
@@ -237,10 +240,16 @@ def admin_products_edit(product_id):
         description = request.form.get('description')
         price = float(request.form.get('price', 0))
         stock = int(request.form.get('stock', 0))
+        
+        # --- AQUÍ CAPTURAMOS LA IMAGEN ---
+        image_url = request.form.get('image_url')
+        
         supplier_id = request.form.get('supplier_id')
-        supplier_id = int(supplier_id) if supplier_id else ''
+        supplier_id = int(supplier_id) if supplier_id else None # Cambiado '' por None para ser consistente
 
-        result = ProductController.update_product(product_id, name, description, price, stock, supplier_id)
+        # Pasamos image_url al controlador
+        result = ProductController.update_product(product_id, name, description, price, stock, image_url, supplier_id)
+        
         if result['success']:
             flash(result['message'], 'success')
             return redirect(url_for('web.admin_products_list'))

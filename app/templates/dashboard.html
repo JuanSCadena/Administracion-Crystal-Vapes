@@ -90,7 +90,7 @@
             border: 1px solid #f5c6cb; 
         }
         
-        /* Responsive para tablets */
+        /* Responsive  */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 25px;
@@ -149,17 +149,17 @@
         <p class="welcome-text">Has iniciado sesión exitosamente en tu aplicación web.</p>
         
         <div class="buttons-grid">
-            <a href="{{ url_for('web.list_users') }}" class="btn-link btn-primary">👥 Ver Usuarios</a>
+            <a href="{{ url_for('web.list_users') }}" class="btn-link btn-primary"> Ver Usuarios</a>
             
             {% if user_role in ['admin', 'subadmin'] %}
-                <a href="{{ url_for('web.admin_dashboard') }}" class="btn-link btn-success">🛠️ Panel de Administración</a>
+                <a href="{{ url_for('web.admin_dashboard') }}" class="btn-link btn-success"> Panel de Administración</a>
             {% endif %}
             
             {% if user_role == 'admin' %}
-                <a href="{{ url_for('web.admin_system_info') }}" class="btn-link btn-warning">📊 Info del Sistema</a>
+                <a href="{{ url_for('web.admin_system_info') }}" class="btn-link btn-warning"> Info del Sistema</a>
             {% endif %}
             
-            <a href="{{ url_for('web.logout') }}" class="btn-link btn-danger">🚪 Cerrar Sesión</a>
+            <a href="{{ url_for('web.logout') }}" class="btn-link btn-danger"> Cerrar Sesión</a>
         </div>
     </div>
 </body>

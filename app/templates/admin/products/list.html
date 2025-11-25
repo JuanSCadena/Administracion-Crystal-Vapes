@@ -244,10 +244,10 @@
                         </td>
                         <td>{{ product.supplier or 'Sin proveedor' }}</td>
                         <td class="action-links">
-                            <a href="{{ url_for('web.admin_products_edit', product_id=product.id) }}">✏️ Editar</a>
+                            <a href="{{ url_for('web.admin_products_edit', product_id=product.id) }}"> Editar</a>
                             {% if user_role == 'admin' %}
                                 <form method="POST" action="{{ url_for('web.admin_products_delete', product_id=product.id) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
-                                    <button type="submit">🗑️ Eliminar</button>
+                                    <button type="submit"> Eliminar</button>
                                 </form>
                             {% endif %}
                         </td>
@@ -257,7 +257,7 @@
             </table>
         </div>
         
-        <a href="{{ url_for('web.admin_dashboard') }}" class="btn-back">⬅️ Volver al Panel Admin</a>
+        <a href="{{ url_for('web.admin_dashboard') }}" class="btn-back"> Volver al Panel Admin</a>
     </div>
 </body>
 </html>

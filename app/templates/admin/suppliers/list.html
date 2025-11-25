@@ -217,7 +217,7 @@
                         <td>{{ supplier.phone or 'N/A' }}</td>
                         <td>{{ supplier.email or 'N/A' }}</td>
                         <td class="action-links">
-                            <a href="{{ url_for('web.admin_suppliers_edit', supplier_id=supplier.id) }}">✏️ Editar</a>
+                            <a href="{{ url_for('web.admin_suppliers_edit', supplier_id=supplier.id) }}"> Editar</a>
                             <form method="POST" action="{{ url_for('web.admin_suppliers_delete', supplier_id=supplier.id) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este proveedor?');">
                                 <button type="submit">🗑️ Eliminar</button>
                             </form>
@@ -228,7 +228,7 @@
             </table>
         </div>
         
-        <a href="{{ url_for('web.admin_dashboard') }}" class="btn-back">⬅️ Volver al Panel Admin</a>
+        <a href="{{ url_for('web.admin_dashboard') }}" class="btn-back"> Volver al Panel Admin</a>
     </div>
 </body>
 </html>
