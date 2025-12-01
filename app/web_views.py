@@ -205,15 +205,22 @@ def admin_products_create():
         description = request.form.get('description')
         price = float(request.form.get('price', 0))
         stock = int(request.form.get('stock', 0))
-        
-        # --- AQUÍ CAPTURAMOS LA IMAGEN ---
         image_url = request.form.get('image_url')
-        
         supplier_id = request.form.get('supplier_id')
         supplier_id = int(supplier_id) if supplier_id else None
 
-        # Pasamos image_url al controlador (asegúrate que el orden coincide con tu controller)
-        result = ProductController.create_product(name, description, price, stock, image_url, supplier_id)
+        # --- CAPTURAR NUEVOS CAMPOS (FASE 2) ---
+        sabor = request.form.get('sabor')
+        bateria = request.form.get('bateria')
+        color = request.form.get('color')
+        # Checkbox: Si está marcado envía 'true', si no, None.
+        en_promocion = True if request.form.get('en_promocion') == 'true' else False
+
+        # Pasamos TODOS los datos al controlador
+        result = ProductController.create_product(
+            name, description, price, stock, image_url, supplier_id,
+            sabor, bateria, color, en_promocion
+        )
         
         if result['success']:
             flash(result['message'], 'success')
@@ -240,15 +247,21 @@ def admin_products_edit(product_id):
         description = request.form.get('description')
         price = float(request.form.get('price', 0))
         stock = int(request.form.get('stock', 0))
-        
-        # --- AQUÍ CAPTURAMOS LA IMAGEN ---
         image_url = request.form.get('image_url')
-        
         supplier_id = request.form.get('supplier_id')
-        supplier_id = int(supplier_id) if supplier_id else None # Cambiado '' por None para ser consistente
+        supplier_id = int(supplier_id) if supplier_id else None
 
-        # Pasamos image_url al controlador
-        result = ProductController.update_product(product_id, name, description, price, stock, image_url, supplier_id)
+        # --- CAPTURAR NUEVOS CAMPOS (FASE 2) ---
+        sabor = request.form.get('sabor')
+        bateria = request.form.get('bateria')
+        color = request.form.get('color')
+        en_promocion = True if request.form.get('en_promocion') == 'true' else False
+
+        # Pasamos TODOS los datos al controlador
+        result = ProductController.update_product(
+            product_id, name, description, price, stock, image_url, supplier_id,
+            sabor, bateria, color, en_promocion
+        )
         
         if result['success']:
             flash(result['message'], 'success')

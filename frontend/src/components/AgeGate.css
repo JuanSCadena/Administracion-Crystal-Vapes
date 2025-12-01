@@ -1,0 +1,70 @@
+/* frontend/src/components/AgeGate.css */
+.age-gate-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95); /* Fondo muy oscuro para tapar la tienda */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Para que esté encima de TODO */
+  backdrop-filter: blur(5px);
+}
+
+.age-gate-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 2px solid #000;
+}
+
+.warning-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.age-gate-box h2 {
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.age-gate-box p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.age-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-yes, .btn-no {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.btn-yes {
+  background-color: #00d2d3; /* Color de tu marca */
+  color: white;
+}
+
+.btn-no {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-yes:hover, .btn-no:hover {
+  transform: scale(1.05);
+}

@@ -9,12 +9,17 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Numeric(10, 2), nullable=False)
     stock = db.Column(db.Integer, default=0)
+    image_url = db.Column(db.String(500), nullable=True)
     
-    # IMPORTANTE: Campo para React
-    image_url = db.Column(db.String(500), nullable=True) 
+    # Nuevos campos
+    sabor = db.Column(db.String(100), nullable=True)
+    bateria = db.Column(db.String(100), nullable=True)
+    color = db.Column(db.String(100), nullable=True)
+    en_promocion = db.Column(db.Boolean, default=False)
 
-    # Fíjate que aquí usamos 'suppliers.id' que coincide con el __tablename__ de supplier.py
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), nullable=True)
+    
+    
 
     def to_dict(self):
         return {
@@ -24,5 +29,12 @@ class Product(db.Model):
             'price': float(self.price),
             'stock': self.stock,
             'image_url': self.image_url,
-            'supplier_id': self.supplier_id
+            'supplier_id': self.supplier_id,
+            # Aquí usamos self.supplier, que existirá gracias a supplier.py
+            'supplier_name': self.supplier.name if self.supplier else None,
+            
+            'sabor': self.sabor,
+            'bateria': self.bateria,
+            'color': self.color,
+            'en_promocion': self.en_promocion
         }

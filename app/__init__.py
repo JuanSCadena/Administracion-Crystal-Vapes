@@ -3,7 +3,7 @@ from flask import Flask
 from app.extensions import db
 from app.web_views import web_bp
 
-# 1. IMPORTAR EL BLUEPRINT DE PRODUCTOS (El cable nuevo)
+#  IMPORTAR EL BLUEPRINT DE PRODUCTOS 
 from app.controllers.product_controller import product_bp 
 
 def create_app():
@@ -18,8 +18,8 @@ def create_app():
     # Registramos las vistas web normales
     app.register_blueprint(web_bp)
     
-    # 2. REGISTRAR EL BLUEPRINT DE LA API (Conectar el cable)
-    # Esto le dice a Flask: "Oye, si alguien pide /api/products, usa este archivo"
+    #  REGISTRAR EL BLUEPRINT DE LA API 
+    
     app.register_blueprint(product_bp)
     
     with app.app_context():
