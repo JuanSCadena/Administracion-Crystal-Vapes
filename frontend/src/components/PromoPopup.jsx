@@ -9,23 +9,18 @@ const PromoPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    // 1. Verificar si ya lo cerramos antes (para no ser molestos)
     const hasSeenPromo = sessionStorage.getItem('seenPromo');
     
     if (!hasSeenPromo) {
-      // 2. Buscar si hay producto en promoción
       const fetchPromo = async () => {
         try {
-          // Usamos la variable de entorno o localhost
           const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
           const response = await axios.get(`${apiUrl}/api/products`);
           
           if (response.data.success) {
-            // Buscamos el primero que tenga en_promocion = true
             const promoted = response.data.products.find(p => p.en_promocion === true);
             if (promoted) {
               setPromoProduct(promoted);
-              // Pequeño retraso para que aparezca suavemente
               setTimeout(() => setShowPopup(true), 1000);
             }
           }

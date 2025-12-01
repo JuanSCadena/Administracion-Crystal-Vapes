@@ -2,25 +2,31 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import './ProductDetail.css'; // Crearemos esto en el siguiente paso
+import { useCart } from '../context/CartContext';
+import './ProductDetail.css';
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Captura el ID de la URL (ej: /product/1)
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Nuevo estado para errores
+  
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
-        // OJO: Necesitamos asegurar que el Backend tenga esta ruta (Paso 4 de esta respuesta)
         const response = await axios.get(`${apiUrl}/api/products/${id}`);
         
         if (response.data.success) {
           setProduct(response.data.product);
+        } else {
+          setError("El producto no existe en la base de datos.");
         }
-      } catch (error) {
-        console.error("Error:", error);
+      } catch (err) {
+        console.error("Error:", err);
+        setError("Error de conexión con el servidor.");
       } finally {
         setLoading(false);
       }
@@ -28,20 +34,34 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
+  // 1. Si está cargando, mostramos spinner
   if (loading) return <div className="detail-loading">Cargando detalles...</div>;
-  if (!product) return <div className="detail-error">Producto no encontrado</div>;
 
+  // 2. Si hubo error o no hay producto, mostramos mensaje amigable
+  if (error || !product) {
+      return (
+        <div className="detail-error">
+            <h2>😕 Ups, algo salió mal</h2>
+            <p>{error || "Producto no encontrado"}</p>
+            <Link to="/" className="back-link">Volver al inicio</Link>
+        </div>
+      );
+  }
+
+  // 3. Renderizado seguro (usamos ?. para evitar explosiones)
   return (
     <div className="detail-container">
       <Link to="/" className="back-link">← Volver a la tienda</Link>
       
       <div className="detail-wrapper">
-        {/* COLUMNA IZQUIERDA: IMAGEN */}
         <div className="detail-image">
-          <img src={product.image_url} alt={product.name} />
+          {/* Usamos una imagen por defecto si falla la URL */}
+          <img 
+            src={product.image_url || "https://via.placeholder.com/400"} 
+            alt={product.name} 
+          />
         </div>
 
-        {/* COLUMNA DERECHA: INFO */}
         <div className="detail-info">
           <h1>{product.name}</h1>
           <p className="detail-price">${product.price}</p>
@@ -50,7 +70,6 @@ const ProductDetail = () => {
           <div className="tech-specs">
             <h3>Especificaciones:</h3>
             <ul>
-              {/* Mostramos los datos si existen, si no, ponemos "N/A" */}
               <li><strong>🔥 Sabor:</strong> {product.sabor || "Estándar"}</li>
               <li><strong>🔋 Batería:</strong> {product.bateria || "No especificada"}</li>
               <li><strong>🎨 Color:</strong> {product.color || "Varios"}</li>
@@ -58,7 +77,12 @@ const ProductDetail = () => {
             </ul>
           </div>
 
-          <button className="buy-button">AÑADIR AL CARRITO 🛒</button>
+          <button 
+            className="buy-button"
+            onClick={() => addToCart(product)}
+          >
+            AÑADIR AL CARRITO 🛒
+          </button>
         </div>
       </div>
     </div>

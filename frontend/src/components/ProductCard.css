@@ -2,9 +2,9 @@
 .product-card {
   background: white;
   border: 1px solid #e1e1e1;
-  border-radius: 8px; /* Bordes redondeados */
+  border-radius: 8px; 
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s; /* Animación suave */
+  transition: transform 0.2s, box-shadow 0.2s; 
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -28,7 +28,7 @@
 .image-container img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Ajusta la imagen sin estirarla */
+  object-fit: contain; 
 }
 
 .card-details {
@@ -53,7 +53,7 @@
 
 .price-row {
   display: flex;
-  justify-content: space-between; /* Precio a la izq, botón a la der */
+  justify-content: space-between; 
   align-items: center;
   margin-top: 15px;
 }
@@ -65,7 +65,7 @@
 }
 
 .add-btn {
-  background-color: #00d2d3; /* Color estilo Vaper (Cyan) */
+  background-color: #00d2d3; 
   color: white;
   border: none;
   padding: 8px 16px;

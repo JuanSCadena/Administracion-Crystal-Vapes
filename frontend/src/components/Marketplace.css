@@ -63,3 +63,35 @@
   margin: 0 auto;
   padding: 0 2rem 2rem 2rem;
 }
+/* Agrega esto al final de Marketplace.css */
+.header-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.cart-btn {
+  background-color: #ffd700; /* Amarillo Amazon */
+  color: #1a1a1a;
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s;
+}
+
+.cart-btn:hover {
+  transform: scale(1.05);
+  background-color: #ffcc00;
+}
+
+.cart-count {
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
