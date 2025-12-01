@@ -2,10 +2,6 @@
 
 Sistema completo de gestión de inventario y proveedores para Crystal Vapes, desarrollado con Flask siguiendo arquitectura MVC y principios de Clean Code.
 
-![Flask](https://img.shields.io/badge/Flask-3.0-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.10+-green.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Responsive](https://img.shields.io/badge/Responsive-Yes-brightgreen.svg)
 
 
 ### Dashboard Principal
