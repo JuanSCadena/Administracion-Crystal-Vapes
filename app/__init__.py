@@ -2,7 +2,7 @@
 from flask import Flask
 from app.extensions import db
 from app.web_views import web_bp
-
+from config import Config
 # 1. IMPORTAR LOS BLUEPRINTS (CONTROLADORES)
 from app.controllers.product_controller import product_bp 
 from app.controllers.coupon_controller import coupon_bp # <--- Nuevo
@@ -32,3 +32,6 @@ def create_app():
         print("✅ Base de datos inicializada correctamente")
     
     return app
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
