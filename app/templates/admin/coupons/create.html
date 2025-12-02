@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Cupón</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background: #f4f6f9; }
+        .box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 2px solid #eee; border-radius: 5px; }
+        button { width: 100%; padding: 12px; background: #28a745; color: white; border: none; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        .back { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2 style="text-align:center; color:#333;">🎟️ Crear Cupón</h2>
+        <form method="POST">
+            <label>Código del Cupón (ej: VERANO20)</label>
+            <input type="text" name="code" required placeholder="AMIGOS20" style="text-transform:uppercase;">
+            
+            <label>Porcentaje de Descuento (1-100)</label>
+            <input type="number" name="discount" min="1" max="100" required placeholder="20">
+            
+            <button type="submit">Guardar Cupón</button>
+        </form>
+        <a href="{{ url_for('web.admin_coupons_list') }}" class="back">Cancelar</a>
+    </div>
+</body>
+</html>

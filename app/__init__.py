@@ -3,8 +3,9 @@ from flask import Flask
 from app.extensions import db
 from app.web_views import web_bp
 
-#  IMPORTAR EL BLUEPRINT DE PRODUCTOS 
+# 1. IMPORTAR LOS BLUEPRINTS (CONTROLADORES)
 from app.controllers.product_controller import product_bp 
+from app.controllers.coupon_controller import coupon_bp # <--- Nuevo
 
 def create_app():
     app = Flask(__name__)
@@ -15,18 +16,17 @@ def create_app():
     
     db.init_app(app)
     
-    # Registramos las vistas web normales
-    app.register_blueprint(web_bp)
-    
-    #  REGISTRAR EL BLUEPRINT DE LA API 
-    
-    app.register_blueprint(product_bp)
+    # 2. REGISTRAR LOS BLUEPRINTS (RUTAS)
+    app.register_blueprint(web_bp)      # Vistas Web (Admin)
+    app.register_blueprint(product_bp)  # API Productos
+    app.register_blueprint(coupon_bp)   # API Cupones <--- Nuevo
     
     with app.app_context():
-        # Importamos los modelos para asegurar que SQLAlchemy los conozca
+        # 3. IMPORTAR MODELOS (TABLAS)
         from app.models.user import User
         from app.models.product import Product
         from app.models.supplier import Supplier
+        from app.models.coupon import Coupon # <--- Nuevo
         
         db.create_all()
         print("✅ Base de datos inicializada correctamente")

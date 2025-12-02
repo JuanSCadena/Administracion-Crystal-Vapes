@@ -56,7 +56,7 @@ class SupplierController:
         supplier = Supplier.query.get(supplier_id)
         if not supplier:
             return {'success': False, 'message': 'Proveedor no encontrado'}
-        # Opcional: Verificar si hay productos asociados antes de eliminar un proveedor
+        #  Verificar si hay productos asociados antes de eliminar un proveedor
         if supplier.products:
             return {'success': False, 'message': 'No se puede eliminar el proveedor porque tiene productos asociados.'}
 

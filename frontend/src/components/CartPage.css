@@ -34,16 +34,15 @@
   border: 1px solid #eee;
 }
 
-/* --- AQUÍ ESTÁ EL ARREGLO DE LA IMAGEN GIGANTE --- */
 .item-image {
-  width: 100px;        /* Ancho fijo */
-  height: 100px;       /* Alto fijo */
-  object-fit: contain; /* Ajusta la imagen dentro sin estirarla */
-  margin-right: 20px;  /* Espacio a la derecha */
+  width: 100px;        
+  height: 100px;       
+  object-fit: contain; 
+  margin-right: 20px;  
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 5px;
-  flex-shrink: 0;      /* Evita que la imagen se aplaste si falta espacio */
+  flex-shrink: 0;     
 }
 
 /* Detalles del producto */
@@ -95,7 +94,6 @@
 .remove-btn:hover { opacity: 1; color: red; }
 
 
-/* --- RESUMEN (PANEL DERECHO) --- */
 .cart-summary {
   background: white;
   padding: 25px;
@@ -156,11 +154,55 @@
 /* Responsive para celular */
 @media (max-width: 768px) {
   .cart-content { 
-    grid-template-columns: 1fr; /* Una sola columna en celular */
+    grid-template-columns: 1fr; 
   }
   
   .item-image {
     width: 70px;
     height: 70px;
   }
+}
+.coupon-section {
+  margin: 15px 0;
+  padding: 10px 0;
+  border-top: 1px dashed #ddd;
+  border-bottom: 1px dashed #ddd;
+}
+
+.coupon-input-group {
+  display: flex;
+  gap: 5px;
+}
+
+.coupon-input-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.coupon-input-group button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.coupon-input-group button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.coupon-msg {
+  font-size: 0.85rem;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.discount-row {
+  color: #27ae60; 
+  font-weight: bold;
 }

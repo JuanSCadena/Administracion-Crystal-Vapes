@@ -7,6 +7,7 @@ from app.controllers.product_controller import ProductController
 from app.controllers.supplier_controller import SupplierController
 from app.models import Product, Supplier, User
 from app.extensions import db
+from app.controllers.coupon_controller import CouponController
 
 web_bp = Blueprint('web', __name__)
 
@@ -364,3 +365,38 @@ def admin_system_info():
                            total_suppliers=total_suppliers,
                            total_users=total_users,
                            simulated_sales=simulated_sales)
+@web_bp.route('/admin/coupons')
+@login_required
+@role_required(['admin'])
+def admin_coupons_list():
+    result = CouponController.get_all_coupons()
+    coupons = result['coupons'] if result['success'] else []
+    return render_template('admin/coupons/list.html', coupons=coupons, user_role=session.get('user_role'))
+
+@web_bp.route('/admin/coupons/create', methods=['GET', 'POST'])
+@login_required
+@role_required(['admin'])
+def admin_coupons_create():
+    if request.method == 'POST':
+        code = request.form.get('code')
+        discount = int(request.form.get('discount'))
+        
+        result = CouponController.create_coupon(code, discount)
+        if result['success']:
+            flash(result['message'], 'success')
+            return redirect(url_for('web.admin_coupons_list'))
+        else:
+            flash(result['message'], 'error')
+            
+    return render_template('admin/coupons/create.html')
+
+@web_bp.route('/admin/coupons/delete/<int:coupon_id>', methods=['POST'])
+@login_required
+@role_required(['admin'])
+def admin_coupons_delete(coupon_id):
+    result = CouponController.delete_coupon(coupon_id)
+    if result['success']:
+        flash(result['message'], 'success')
+    else:
+        flash(result['message'], 'error')
+    return redirect(url_for('web.admin_coupons_list'))
