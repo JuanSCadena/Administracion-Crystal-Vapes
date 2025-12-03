@@ -55,12 +55,13 @@ const Marketplace = () => {
             </Link>
 
             {/* 2. BOTÓN DE LOGIN (Existente) */}
-            <a href="http://127.0.0.1:5000/login" className="admin-link">
-              Login
-            </a>
+            <a  href={`${import.meta.env.VITE_API_URL}/login`} 
+            className="admin-link"
+            >Login</a>
           </nav>
         </div>
       </header>
+            
 
       {loading && <p className="loading-text">Cargando catálogo...</p>}
       {error && <p className="error-text">{error}</p>}
