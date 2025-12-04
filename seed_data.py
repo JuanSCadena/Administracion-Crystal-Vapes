@@ -11,7 +11,7 @@ with app.app_context():
     # 1. Limpiar base de datos
     db.drop_all()
     db.create_all()
-    print("♻️  Base de datos reiniciada (Campos en Español)...")
+    print("  Base de datos reiniciada (Campos en Español)...")
 
     # 2. Crear Proveedor
     supplier1 = Supplier(name="VapeWorld Distro", email="contact@vapeworld.com", phone="555-0199")
@@ -72,7 +72,7 @@ with app.app_context():
 
     db.session.add_all(products)
     db.session.commit()
-    print("✅ Productos creados.")
+    print(" Productos creados.")
 
     # 4. Crear Cupones (FUERA de la lista de productos)
     coupon1 = Coupon(code="PROMO2024", discount=10, active=True)
@@ -82,4 +82,4 @@ with app.app_context():
     db.session.add(coupon2)
     db.session.commit()
     
-    print("✅ ¡Cupones creados: PROMO2024 (10%) y VIP50 (50%)!")
+    print(" ¡Cupones creados: PROMO2024 (10%) y VIP50 (50%)!")

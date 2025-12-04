@@ -70,10 +70,10 @@ const ProductDetail = () => {
           <div className="tech-specs">
             <h3>Especificaciones:</h3>
             <ul>
-              <li><strong>🔥 Sabor:</strong> {product.sabor || "Estándar"}</li>
-              <li><strong>🔋 Batería:</strong> {product.bateria || "No especificada"}</li>
-              <li><strong>🎨 Color:</strong> {product.color || "Varios"}</li>
-              <li><strong>📦 Stock:</strong> {product.stock} unidades</li>
+              <li><strong> Sabor:</strong> {product.sabor || "Estándar"}</li>
+              <li><strong> Batería:</strong> {product.bateria || "No especificada"}</li>
+              <li><strong> Color:</strong> {product.color || "Varios"}</li>
+              <li><strong> Stock:</strong> {product.stock} unidades</li>
             </ul>
           </div>
 

@@ -180,7 +180,7 @@
             {% endif %}
         {% endwith %}
         
-        <h1>👥 Lista de Usuarios</h1>
+        <h1> Lista de Usuarios</h1>
         
         <div class="table-responsive">
             <table>
@@ -209,9 +209,9 @@
                             {% endif %}
                         </td>
                         <td class="action-links">
-                            <a href="{{ url_for('web.edit_user', user_id=user.id) }}">✏️ Editar</a>
+                            <a href="{{ url_for('web.edit_user', user_id=user.id) }}"> Editar</a>
                             <form method="POST" action="{{ url_for('web.delete_user', user_id=user.id) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
-                                <button type="submit">🗑️ Eliminar</button>
+                                <button type="submit"> Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -220,7 +220,7 @@
             </table>
         </div>
         
-        <a href="{{ url_for('web.dashboard') }}" class="btn-back">⬅️ Volver al Dashboard</a>
+        <a href="{{ url_for('web.dashboard') }}" class="btn-back"> Volver al Dashboard</a>
     </div>
 </body>
 </html>

@@ -44,7 +44,7 @@ const CartPage = () => {
     return (
       <div className="empty-cart-container">
         <div className="empty-cart-box">
-          <h2>Tu carrito está vacío 😔</h2>
+          <h2>Tu carrito está vacío </h2>
           <p>¡Parece que aún no has elegido tu vaper ideal!</p>
           <Link to="/" className="continue-btn">Volver a la tienda</Link>
         </div>
@@ -54,7 +54,7 @@ const CartPage = () => {
 
   return (
     <div className="cart-container">
-      <h1>🛒 Tu Pedido</h1>
+      <h1> Tu Pedido</h1>
       
       <div className="cart-content">
         {/* LISTA DE PRODUCTOS */}

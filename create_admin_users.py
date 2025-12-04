@@ -14,9 +14,9 @@ with app.app_context():
             role='admin'
         )
         db.session.add(admin)
-        print("✅ Usuario 'admin' creado")
+        print(" Usuario 'admin' creado")
     else:
-        print("⚠️ Usuario 'admin' ya existe")
+        print(" Usuario 'admin' ya existe")
     
     # Crear subadmin
     if not User.query.filter_by(username='subadmin').first():
@@ -27,12 +27,12 @@ with app.app_context():
             role='subadmin'
         )
         db.session.add(subadmin)
-        print("✅ Usuario 'subadmin' creado")
+        print(" Usuario 'subadmin' creado")
     else:
-        print("⚠️ Usuario 'subadmin' ya existe")
+        print(" Usuario 'subadmin' ya existe")
     
     db.session.commit()
-    print("\n🎉 Usuarios de administración listos")
-    print("📝 Credenciales:")
+    print("\n Usuarios de administración listos")
+    print(" Credenciales:")
     print("   Admin: admin / admin123")
     print("   Subadmin: subadmin / subadmin123")

@@ -46,7 +46,7 @@ const PromoPopup = () => {
       <div className="promo-content">
         <button className="close-btn" onClick={handleClose}>&times;</button>
         
-        <div className="promo-badge">🔥 OFERTA FLASH</div>
+        <div className="promo-badge"> OFERTA FLASH</div>
         
         <div className="promo-image">
             <img src={promoProduct.image_url} alt={promoProduct.name} />

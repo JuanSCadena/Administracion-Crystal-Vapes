@@ -51,7 +51,7 @@ const Marketplace = () => {
           <nav className="header-actions">
             {/* 1. BOTÓN DEL CARRITO (Nuevo) */}
             <Link to="/cart" className="cart-btn">
-              🛒 Carrito <span className="cart-count">({totalItems})</span>
+               Carrito <span className="cart-count">({totalItems})</span>
             </Link>
 
             {/* 2. BOTÓN DE LOGIN (Existente) */}

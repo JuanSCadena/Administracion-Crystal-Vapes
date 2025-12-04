@@ -179,53 +179,53 @@
 </head>
 <body>
     <div class="container">
-        <h1>🛠️ Panel de Administración E-commerce</h1>
+        <h1> Panel de Administración E-commerce</h1>
         
         <div class="stats">
             <div class="stat-card">
                 <h3>{{ total_products }}</h3>
-                <p>📦 Total Productos</p>
+                <p> Total Productos</p>
             </div>
             <div class="stat-card">
                 <h3>{{ total_suppliers }}</h3>
-                <p>🏢 Total Proveedores</p>
+                <p> Total Proveedores</p>
             </div>
             <div class="stat-card">
                 <h3>{{ total_users }}</h3>
-                <p>👥 Total Usuarios</p>
+                <p> Total Usuarios</p>
             </div>
             <div class="stat-card">
                 <h3>${{ "%.2f"|format(simulated_sales) }}</h3>
-                <p>💰 Ventas (simuladas)</p>
+                <p> Ventas (simuladas)</p>
             </div>
         </div>
         
         <h2>Menú de Gestión</h2>
         <div class="menu">
             <a href="{{ url_for('web.admin_products_list') }}" class="menu-item"> 
-                📦 Gestionar Productos
+                 Gestionar Productos
             </a>
             
             {% if user_role == 'admin' %}
                 <a href="{{ url_for('web.admin_suppliers_list') }}" class="menu-item"> 
-                    🏢 Gestionar Proveedores
+                     Gestionar Proveedores
                 </a>
 
                 <a href="{{ url_for('web.admin_coupons_list') }}" class="menu-item" style="background: linear-gradient(135deg, #11998e, #38ef7d);"> 
-                    🎟️ Gestionar Cupones
+                     Gestionar Cupones
                 </a>
 
                 <a href="{{ url_for('web.admin_system_info') }}" class="menu-item" style="background: linear-gradient(135deg, #17a2b8, #117a8b);"> 
-                    ℹ️ Información del Sistema
+                    ℹ Información del Sistema
                 </a>
             {% else %}
-                <span class="menu-item disabled">🏢 Gestionar Proveedores (Solo Admin)</span>
-                <span class="menu-item disabled">🎟️ Gestionar Cupones (Solo Admin)</span>
-                <span class="menu-item disabled">ℹ️ Información del Sistema (Solo Admin)</span>
+                <span class="menu-item disabled"> Gestionar Proveedores (Solo Admin)</span>
+                <span class="menu-item disabled"> Gestionar Cupones (Solo Admin)</span>
+                <span class="menu-item disabled">ℹ Información del Sistema (Solo Admin)</span>
             {% endif %}
         </div>
         
-        <a href="{{ url_for('web.dashboard') }}" class="btn-back">⬅️ Volver al Dashboard Principal</a>
+        <a href="{{ url_for('web.dashboard') }}" class="btn-back"> Volver al Dashboard Principal</a>
     </div>
 </body>
 </html>

@@ -177,7 +177,7 @@ def admin_dashboard():
     total_products = Product.query.count()
     total_suppliers = Supplier.query.count()
     total_users = User.query.count()
-    simulated_sales = 12345.67
+    simulated_sales = 0
 
     return render_template('admin/dashboard.html',
                            total_products=total_products,
@@ -358,7 +358,7 @@ def admin_system_info():
     total_products = Product.query.count()
     total_suppliers = Supplier.query.count()
     total_users = User.query.count()
-    simulated_sales = 12345.67
+    simulated_sales = 0
     
     return render_template('admin/system_info.html',
                            total_products=total_products,
