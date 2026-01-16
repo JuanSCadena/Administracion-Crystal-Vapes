@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# --- PYTHON / FLASK ---
+venv/
+__pycache__/
+*.pyc
+instance/
+.pytest_cache/
+*.log
+
+database.db
+#--- FRONTEND / REACT ---
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# --- SISTEMA ---
+.DS_Store
