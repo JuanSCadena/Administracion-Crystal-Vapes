@@ -4,6 +4,7 @@ from app.extensions import db
 from app.web_views import web_bp
 from app.controllers.product_controller import product_bp 
 from app.controllers.coupon_controller import coupon_bp
+from app.frontend_views import frontend_bp
 from config import Config # Asegúrate de importar Config si ya creaste ese archivo
 
 def create_app():
@@ -19,6 +20,7 @@ def create_app():
     app.register_blueprint(web_bp)
     app.register_blueprint(product_bp)
     app.register_blueprint(coupon_bp)
+    app.register_blueprint(frontend_bp)
     
     with app.app_context():
         # Importar modelos

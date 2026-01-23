@@ -9,7 +9,7 @@ from app.models import Product, Supplier, User
 from app.extensions import db
 from app.controllers.coupon_controller import CouponController
 
-web_bp = Blueprint('web', __name__)
+web_bp = Blueprint('web', __name__, url_prefix='/admin')
 
 # --- Decoradores de autenticación y autorización ---
 def login_required(f):
