@@ -1,17 +1,20 @@
 # app/controllers/product_controller.py
 from flask import Blueprint, jsonify
-from app.models.product import Product
 from app.models.supplier import Supplier
-from app.models import db
+# from app.models import db  <-- Removed direct usage
+from app.repositories.product_repository import ProductRepository
+from app.factories.product_factory import ProductFactory
 
 product_bp = Blueprint('product_bp', __name__)
+
+product_repo = ProductRepository()
 
 class ProductController:
 
     @staticmethod
     def get_product_by_id(product_id):
         """
-        Obtiene un producto por su ID.
+        Obtiene un producto por su ID usando el Repositorio.
         
         Args:
             product_id (int): ID del producto.
@@ -20,7 +23,7 @@ class ProductController:
             dict: Datos del producto o mensaje de error.
         """
         try:
-            product = Product.query.get(product_id)
+            product = product_repo.get_by_id(product_id)
             if not product:
                 return {'success': False, 'message': 'Producto no encontrado'}
             return {'success': True, 'product': product}
@@ -30,13 +33,13 @@ class ProductController:
     @staticmethod
     def get_all_products():
         """
-        Obtiene todos los productos registrados.
+        Obtiene todos los productos registrados usando el Repositorio.
         
         Returns:
             dict: Lista de todos los productos.
         """
         try:
-            products = Product.query.all()
+            products = product_repo.get_all()
             # Convertimos la lista de objetos a lista de diccionarios
             return {'success': True, 'products': [p.to_dict() for p in products]}
         except Exception as e:
@@ -46,25 +49,26 @@ class ProductController:
     @staticmethod
     def get_product_count():
         """
-        Obtiene la cantidad total de productos.
+        Obtiene la cantidad total de productos usando el Repositorio.
         
         Returns:
             int: Número de productos.
         """
-        return Product.query.count()
+        return product_repo.count()
 
     @staticmethod
     def create_product(name, description, price, stock, image_url=None, supplier_id=None, sabor=None, bateria=None, color=None, en_promocion=False):
         try:
-            if Product.query.filter_by(name=name).first():
+            if product_repo.get_by_name(name):
                 return {'success': False, 'message': 'Ya existe un producto con ese nombre'}
 
             if supplier_id:
-                supplier = Supplier.query.get(supplier_id)
+                supplier = Supplier.query.get(supplier_id) # Esto también debería ir a un SupplierRepository idealmente, pero por alcance dejamos así o creamos uno rápido.
                 if not supplier:
                     return {'success': False, 'message': 'Proveedor no encontrado'}
 
-            new_product = Product(
+            # Usamos Factory para crear la instancia (OCP)
+            new_product = ProductFactory.create(
                 name=name,
                 description=description,
                 price=price,
@@ -77,17 +81,18 @@ class ProductController:
                 en_promocion=en_promocion
             )
             
-            db.session.add(new_product)
-            db.session.commit()
+            # Usamos Repository para guardar (DIP)
+            product_repo.add(new_product)
+            
             return {'success': True, 'message': 'Producto creado exitosamente', 'product': new_product.to_dict()}
         except Exception as e:
-            db.session.rollback()
+            # db.session.rollback() # El repo podría manejar esto, pero por simplicidad está bien aquí si falla algo intermedio
             return {'success': False, 'message': f'Error al crear producto: {str(e)}'}
 
     @staticmethod
     def update_product(product_id, name=None, description=None, price=None, stock=None, image_url=None, supplier_id=None, sabor=None, bateria=None, color=None, en_promocion=None):
         try:
-            product = Product.query.get(product_id)
+            product = product_repo.get_by_id(product_id)
             if not product:
                 return {'success': False, 'message': 'Producto no encontrado'}
 
@@ -111,24 +116,23 @@ class ProductController:
                         return {'success': False, 'message': 'Proveedor no encontrado'}
                     product.supplier_id = supplier_id
 
-            db.session.commit()
+            product_repo.update()
             return {'success': True, 'message': 'Producto actualizado exitosamente', 'product': product.to_dict()}
         except Exception as e:
-            db.session.rollback()
+            # db.session.rollback()
             return {'success': False, 'message': f'Error al actualizar: {str(e)}'}
 
     @staticmethod
     def delete_product(product_id):
         try:
-            product = Product.query.get(product_id)
+            product = product_repo.get_by_id(product_id)
             if not product:
                 return {'success': False, 'message': 'Producto no encontrado'}
             
-            db.session.delete(product)
-            db.session.commit()
+            product_repo.delete(product)
             return {'success': True, 'message': 'Producto eliminado exitosamente'}
         except Exception as e:
-            db.session.rollback()
+            # db.session.rollback()
             return {'success': False, 'message': str(e)}
 
 # --- RUTAS API (ENDPOINTS) ---

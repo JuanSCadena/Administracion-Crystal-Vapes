@@ -1,5 +1,7 @@
-from app.models import db, User
+from app.repositories.user_repository import UserRepository
 from werkzeug.security import generate_password_hash, check_password_hash
+
+user_repo = UserRepository()
 
 class AuthController:
 
@@ -18,9 +20,9 @@ class AuthController:
             dict: Resultado de la operación con claves 'success' y 'message'.
         """
         # Verificar si el usuario ya existe
-        if User.query.filter_by(username=username).first():
+        if user_repo.get_by_username(username):
             return {'success': False, 'message': 'El nombre de usuario ya existe'}
-        if User.query.filter_by(email=email).first():
+        if user_repo.get_by_email(email):
             return {'success': False, 'message': 'El email ya está registrado'}
         
         # Hash de la contraseña
@@ -28,10 +30,11 @@ class AuthController:
         
         # Determinar rol: si es el primer usuario, es admin
         role = 'user'
-        if User.query.count() == 0:
+        if user_repo.count() == 0:
             role = 'admin'
 
         # Crear nuevo usuario
+        from app.models.user import User # Importación local para evitar circularidad si fuera el caso, o uso de Factory si hubiera
         new_user = User(
             username=username,
             email=email,
@@ -39,8 +42,7 @@ class AuthController:
             role=role
         )
         
-        db.session.add(new_user)
-        db.session.commit()
+        user_repo.add(new_user)
         
         msg = 'Usuario registrado exitosamente'
         if role == 'admin':
@@ -60,7 +62,7 @@ class AuthController:
         Returns:
             dict: Resultado con 'success', 'message' y 'user' (si es exitoso).
         """
-        user = User.query.filter_by(username=username).first()
+        user = user_repo.get_by_username(username)
         
         if not user or not check_password_hash(user.password, password):
             return {'success': False, 'message': 'Usuario o contraseña incorrectos'}
@@ -79,7 +81,7 @@ class AuthController:
         Returns:
             dict: Lista de usuarios.
         """
-        users = User.query.all()
+        users = user_repo.get_all()
         return {'success': True, 'users': [user.to_dict() for user in users]}
 
     @staticmethod
@@ -90,7 +92,7 @@ class AuthController:
         Returns:
             int: Número de usuarios.
         """
-        return User.query.count()
+        return user_repo.count()
 
     @staticmethod
     def get_user_by_id(user_id):
@@ -103,7 +105,7 @@ class AuthController:
         Returns:
             dict: Datos del usuario o mensaje de error.
         """
-        user = User.query.get(user_id)
+        user = user_repo.get_by_id(user_id)
         if not user:
             return {'success': False, 'message': 'Usuario no encontrado'}
         return {'success': True, 'user': user.to_dict()}
@@ -123,21 +125,21 @@ class AuthController:
         Returns:
             dict: Resultado de la operación.
         """
-        user = User.query.get(user_id)
+        user = user_repo.get_by_id(user_id)
         if not user:
             return {'success': False, 'message': 'Usuario no encontrado'}
         
         # Actualizar campos si se proporcionan
         if username:
             # Verificar que el username no esté en uso por otro usuario
-            existing = User.query.filter(User.username == username, User.id != user_id).first()
+            existing = user_repo.check_username_exists(username, exclude_id=user_id)
             if existing:
                 return {'success': False, 'message': 'El nombre de usuario ya existe'}
             user.username = username
             
         if email:
             # Verificar que el email no esté en uso por otro usuario
-            existing = User.query.filter(User.email == email, User.id != user_id).first()
+            existing = user_repo.check_email_exists(email, exclude_id=user_id)
             if existing:
                 return {'success': False, 'message': 'El email ya está registrado'}
             user.email = email
@@ -151,7 +153,7 @@ class AuthController:
                 return {'success': False, 'message': 'Rol inválido'}
             user.role = role
         
-        db.session.commit()
+        user_repo.update()
         return {'success': True, 'message': 'Usuario actualizado exitosamente'}
 
     @staticmethod
@@ -165,10 +167,9 @@ class AuthController:
         Returns:
             dict: Resultado de la operación.
         """
-        user = User.query.get(user_id)
+        user = user_repo.get_by_id(user_id)
         if not user:
             return {'success': False, 'message': 'Usuario no encontrado'}
         
-        db.session.delete(user)
-        db.session.commit()
+        user_repo.delete(user)
         return {'success': True, 'message': 'Usuario eliminado exitosamente'}

@@ -109,6 +109,8 @@ Gestión completa de productos, proveedores y estadísticas del sistema en tiemp
 
 ### Arquitectura
 - **MVC** (Model-View-Controller)
+- **Repo & Factory Patterns** (Design Patterns)
+- **SOLID Principles** (SRP, OCP, DIP)
 - **Clean Code** principles
 - **RESTful** routing patterns
 
