@@ -5,8 +5,8 @@ from functools import wraps
 from app.controllers.auth_controller import AuthController
 from app.controllers.product_controller import ProductController
 from app.controllers.supplier_controller import SupplierController
-from app.models import Product, Supplier, User
-from app.extensions import db
+# from app.models import Product, Supplier, User  <-- Removed direct model usage
+# from app.extensions import db <-- Removed direct db usage
 from app.controllers.coupon_controller import CouponController
 
 web_bp = Blueprint('web', __name__, url_prefix='/admin')
@@ -30,8 +30,14 @@ def role_required(roles):
                 return redirect(url_for('web.login'))
             
             # Recuperar el usuario de la DB para obtener el rol actualizado
-            user = User.query.get(session['user_id'])
-            if not user or user.role not in roles:
+            response = AuthController.get_user_by_id(session['user_id'])
+            if not response['success']:
+                 flash('Error al verificar permisos.', 'error')
+                 return redirect(url_for('web.login'))
+            
+            user = response['user']
+            # user es un diccionario, accedemos con clave
+            if not user or user['role'] not in roles:
                 flash('No tienes permiso para acceder a esta página.', 'error')
                 abort(403)
             return f(*args, **kwargs)
@@ -55,15 +61,8 @@ def register():
         result = AuthController.register_user(username, email, password)
         
         if result['success']:
-            # Si es el primer usuario en la DB, hacerlo admin
-            if User.query.count() == 1:
-                new_user = User.query.filter_by(username=username).first()
-                if new_user:
-                    new_user.role = 'admin'
-                    db.session.commit()
-                    flash('Usuario registrado exitosamente como ADMIN (primer usuario).', 'success')
-            else:
-                flash(result['message'], 'success')
+            # La lógica de "Primer usuario es admin" ya se maneja en el controlador
+            flash(result['message'], 'success')
             return redirect(url_for('web.login'))
         else:
             flash(result['message'], 'error')
@@ -174,9 +173,9 @@ def delete_user(user_id):
 @login_required
 @role_required(['admin', 'subadmin'])
 def admin_dashboard():
-    total_products = Product.query.count()
-    total_suppliers = Supplier.query.count()
-    total_users = User.query.count()
+    total_products = ProductController.get_product_count()
+    total_suppliers = SupplierController.get_supplier_count()
+    total_users = AuthController.get_user_count()
     simulated_sales = 0
 
     return render_template('admin/dashboard.html',
@@ -355,9 +354,9 @@ def admin_suppliers_delete(supplier_id):
 @login_required
 @role_required(['admin'])
 def admin_system_info():
-    total_products = Product.query.count()
-    total_suppliers = Supplier.query.count()
-    total_users = User.query.count()
+    total_products = ProductController.get_product_count()
+    total_suppliers = SupplierController.get_supplier_count()
+    total_users = AuthController.get_user_count()
     simulated_sales = 0
     
     return render_template('admin/system_info.html',

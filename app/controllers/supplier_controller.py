@@ -4,8 +4,24 @@ class SupplierController:
 
     @staticmethod
     def get_all_suppliers():
+        """
+        Obtiene todos los proveedores registrados.
+        
+        Returns:
+            dict: Lista de proveedores.
+        """
         suppliers = Supplier.query.all()
         return {'success': True, 'suppliers': [s.to_dict() for s in suppliers]}
+
+    @staticmethod
+    def get_supplier_count():
+        """
+        Obtiene la cantidad total de proveedores.
+        
+        Returns:
+            int: Número de proveedores.
+        """
+        return Supplier.query.count()
 
     @staticmethod
     def get_supplier_by_id(supplier_id):

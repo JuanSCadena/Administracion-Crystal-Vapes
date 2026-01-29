@@ -10,6 +10,15 @@ class ProductController:
 
     @staticmethod
     def get_product_by_id(product_id):
+        """
+        Obtiene un producto por su ID.
+        
+        Args:
+            product_id (int): ID del producto.
+            
+        Returns:
+            dict: Datos del producto o mensaje de error.
+        """
         try:
             product = Product.query.get(product_id)
             if not product:
@@ -20,6 +29,12 @@ class ProductController:
 
     @staticmethod
     def get_all_products():
+        """
+        Obtiene todos los productos registrados.
+        
+        Returns:
+            dict: Lista de todos los productos.
+        """
         try:
             products = Product.query.all()
             # Convertimos la lista de objetos a lista de diccionarios
@@ -27,6 +42,16 @@ class ProductController:
         except Exception as e:
             print(f"Error en get_all_products: {e}")
             return {'success': False, 'message': 'Error al obtener productos'}
+
+    @staticmethod
+    def get_product_count():
+        """
+        Obtiene la cantidad total de productos.
+        
+        Returns:
+            int: Número de productos.
+        """
+        return Product.query.count()
 
     @staticmethod
     def create_product(name, description, price, stock, image_url=None, supplier_id=None, sabor=None, bateria=None, color=None, en_promocion=False):
